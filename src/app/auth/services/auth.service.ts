@@ -20,6 +20,10 @@ export class AuthService {
     );
   }
 
+  register(data: { email: string; password: string }) {
+    return this.http.post(`${this.baseUrl}/register`, data);
+  }
+
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
