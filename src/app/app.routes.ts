@@ -1,3 +1,4 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -11,5 +12,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./auth/components/register/register.component').then(m => m.RegisterComponent)
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  {
+    path: 'tasks',
+    loadChildren: () =>
+      import('./features/tasks/tasks.module').then(m => m.TasksModule)
+  },
+  // ruta por defecto
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // atrapar todo lo demás
+  { path: '**', redirectTo: 'login' }
 ];
