@@ -77,4 +77,14 @@ export class TaskService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  /** Filtrar tareas */
+  filter(filters: {
+    status?: string;
+    priority?: string;
+    fromDate?: string;
+    toDate?: string;
+  }): Observable<Task[]> {
+    return this.http.post<Task[]>(`${this.baseUrl}/filter`, filters);
+  }
 }

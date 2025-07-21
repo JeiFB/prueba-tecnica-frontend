@@ -2,7 +2,39 @@
     <button mat-raised-button color="primary" routerLink="new">
       Nueva tarea
     </button>
-  
+
+  <!-- Formulario de filtros -->
+  <form [formGroup]="filterForm" (ngSubmit)="filterTasks()" class="filter-form" style="margin: 16px 0; display: flex; gap: 16px; flex-wrap: wrap; align-items: end;">
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let s of statuses" [value]="s.value">{{ s.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Prioridad</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let p of priorities" [value]="p.value">{{ p.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Desde</mat-label>
+      <input matInput [matDatepicker]="fromPicker" formControlName="fromDate">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Hasta</mat-label>
+      <input matInput [matDatepicker]="toPicker" formControlName="toDate">
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Buscar</button>
+    <button mat-button type="button" (click)="load()">Limpiar</button>
+  </form>
+
     <table mat-table [dataSource]="(tasks$ | async) || []" class="mat-elevation-z8">
   
       <!-- Título -->
@@ -20,13 +52,13 @@
       <!-- Estado -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Estado</th>
-        <td mat-cell *matCellDef="let t">{{ t.status }}</td>
+        <td mat-cell *matCellDef="let t">{{ getStatusLabel(t.status) }}</td>
       </ng-container>
   
       <!-- Prioridad -->
       <ng-container matColumnDef="priority">
         <th mat-header-cell *matHeaderCellDef>Prioridad</th>
-        <td mat-cell *matCellDef="let t">{{ t.priority }}</td>
+        <td mat-cell *matCellDef="let t">{{ getPriorityLabel(t.priority) }}</td>
       </ng-container>
   
       <!-- Usuario asignado -->
