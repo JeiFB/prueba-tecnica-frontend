@@ -4,13 +4,14 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth';
+  private authUrl = 'http://localhost:8080/auth';
+  private userUrl = 'http://localhost:8080/user';
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }) {
     return this.http.post<{ access_token: string; refresh_token: string }>(
-      `${this.baseUrl}/login`,
+      `${this.authUrl}/login`,
       credentials
     ).pipe(
       tap(res => {
@@ -20,8 +21,8 @@ export class AuthService {
     );
   }
 
-  register(data: { email: string; password: string }) {
-    return this.http.post(`${this.baseUrl}/register`, data);
+  register(data: any) { // Se puede crear un DTO para el registro
+    return this.http.post(`${this.userUrl}/`, data);
   }
 
   logout() {

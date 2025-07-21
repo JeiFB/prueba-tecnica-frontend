@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';       // ← importa este
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.fb.group({
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
@@ -54,8 +55,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.invalid) return;
-    const { email, password } = this.registerForm.value;
-    this.auth.register({ email, password }).subscribe({
+    const { name, email, password } = this.registerForm.value;
+    this.auth.register({ name, email, password }).subscribe({
       next: () => this.router.navigate(['/login']),
       error: err => console.error('Registro fallido', err)
     });

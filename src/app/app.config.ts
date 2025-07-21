@@ -11,15 +11,15 @@
 
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';               // <— importa
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
+import { authInterceptor } from './core/services/auth.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),       // inyecta el router
-    provideHttpClient(),         // inyecta HttpClient para tus servicios
-    provideAnimationsAsync()     // animaciones de Material
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideAnimationsAsync()
   ]
 };

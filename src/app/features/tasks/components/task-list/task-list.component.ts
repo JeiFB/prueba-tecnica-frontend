@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskService } from '../../../../core/services/task.service';
-import { Task } from '../../../../shared/models/tasks'
+import { Task } from '../../../../shared/models/tasks';
 
 @Component({
   selector: 'app-task-list',
@@ -10,7 +10,7 @@ import { Task } from '../../../../shared/models/tasks'
 })
 export class TaskListComponent implements OnInit {
   tasks$!: Observable<Task[]>;
-  displayedColumns = ['title', 'dueDate', 'status', 'priority', 'actions'];
+  displayedColumns = ['title', 'dueDate', 'status', 'priority', 'user', 'actions'];
 
   constructor(private taskService: TaskService) {}
 

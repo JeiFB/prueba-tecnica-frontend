@@ -37,6 +37,14 @@
             <mat-option *ngFor="let p of priorities" [value]="p">{{ p }}</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Asignar a</mat-label>
+          <mat-select formControlName="userId">
+            <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('userId')?.invalid">Requerido</mat-error>
+        </mat-form-field>
       </mat-card-content>
   
       <mat-card-actions>

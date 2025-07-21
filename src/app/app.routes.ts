@@ -5,12 +5,12 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./auth/components/login/login.component').then(m => m.LoginComponent)
+      import('./features/auth/components/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'register',
     loadComponent: () =>
-      import('./auth/components/register/register.component').then(m => m.RegisterComponent)
+      import('./features/auth/components/register/register.component').then(m => m.RegisterComponent)
   },
   {
     path: 'tasks',

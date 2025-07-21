@@ -13,7 +13,7 @@ import { authGuard } from '../../core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    // canActivate: [ authGuard ],
+    canActivate: [ authGuard ],
     children: [
       { path: '', component: TaskListComponent },
       { path: 'new', component: TaskFormComponent },

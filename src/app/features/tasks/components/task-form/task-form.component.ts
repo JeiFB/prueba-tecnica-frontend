@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../../../core/services/task.service';
 import { Task } from '../../../../shared/models/tasks';
+import { UserService } from '../../../../core/services/user.service';
+import { User } from '../../../../shared/models/user';
 
 @Component({
   selector: 'app-task-form',
@@ -13,6 +15,7 @@ export class TaskFormComponent implements OnInit {
   form!: FormGroup;
   isEdit = false;
   taskId!: number;
+  users: User[] = [];
 
   statuses = ['TO_DO','IN_PROGRESS','DONE'];
   priorities = ['LOW','MEDIUM','HIGH'];
@@ -21,17 +24,20 @@ export class TaskFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
+    this.loadUsers();
     // 1. Inicializar formulario
     this.form = this.fb.group({
       title:       ['', [Validators.required]],
       description: [''],
       dueDate:     [null, [Validators.required]],
       status:      ['', [Validators.required]],
-      priority:    ['', [Validators.required]]
+      priority:    ['', [Validators.required]],
+      userId:      [null, [Validators.required]]
     });
 
     // 2. Detectar si viene id para editar
@@ -46,20 +52,24 @@ export class TaskFormComponent implements OnInit {
             description: task.description,
             dueDate:     new Date(task.dueDate),
             status:      task.status,
-            priority:    task.priority
+            priority:    task.priority,
+            userId:      task.userId
           });
         });
       }
     });
   }
 
+  loadUsers() {
+    this.userService.list().subscribe((users: User[]) => {
+      this.users = users;
+    });
+  }
+
   onSubmit() {
     if (this.form.invalid) return;
 
-    const payload: Task = {
-      ...this.form.value,
-      dueDate: this.form.value.dueDate.toISOString().substring(0,10)
-    };
+    const payload: Task = this.form.getRawValue();
 
     const obs = this.isEdit
       ? this.taskService.update(this.taskId, payload)
@@ -72,3 +82,4 @@ export class TaskFormComponent implements OnInit {
     this.router.navigate(['/tasks']);
   }
 }
+
