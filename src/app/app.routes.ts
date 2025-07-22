@@ -1,5 +1,6 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -15,14 +16,16 @@ export const routes: Routes = [
   {
     path: 'tasks',
     loadChildren: () =>
-      import('./features/tasks/tasks.module').then(m => m.TasksModule)
+      import('./features/tasks/tasks.module').then(m => m.TasksModule),
+    canActivate: [authGuard] // Proteger esta ruta
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
+    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [authGuard] // Proteger también el dashboard
   },
-  // ruta por defecto
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  // atrapar todo lo demás
+  // La ruta raíz debería redirigir a una página protegida si el usuario ya está logueado
+  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+  // Atrapar todo lo demás y redirigir a login
   { path: '**', redirectTo: 'login' }
 ];

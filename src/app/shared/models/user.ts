@@ -2,8 +2,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  password?: string; // El password usualmente no se expone en el front-end
-  createAt?: Date;
-  updateAt?: Date;
+  createAt?: string;
+  updateAt?: string;
   isActive?: boolean;
 } 

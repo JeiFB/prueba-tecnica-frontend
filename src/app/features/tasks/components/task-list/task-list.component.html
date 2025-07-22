@@ -1,7 +1,9 @@
 <div class="tasks-container">
   <!-- Header con acciones principales -->
   <div class="tasks-header">
-    <h1>Mis Tareas</h1>
+    <div class="header-left">
+      <h1>Mis Tareas</h1>
+    </div>
     <div class="header-actions">
       <button mat-flat-button color="primary" routerLink="new">
         <mat-icon>add</mat-icon>
@@ -11,6 +13,7 @@
         <mat-icon>dashboard</mat-icon>
         Ver Dashboard
       </button>
+      <app-user-menu></app-user-menu>
     </div>
   </div>
 

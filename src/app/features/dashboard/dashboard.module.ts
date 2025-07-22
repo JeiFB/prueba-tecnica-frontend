@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MaterialModule } from '../../shared/material.module';
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatProgressBarModule
+    MaterialModule,
+    RouterModule.forChild([
+      { path: '', component: DashboardComponent }
+    ])
   ]
 })
-export class DashboardModule {} 
+export class DashboardModule { } 

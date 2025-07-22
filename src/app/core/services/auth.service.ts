@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private authUrl = 'http://localhost:8080/auth';
-  private userUrl = 'http://localhost:8080/user';
+  private authUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}
 
@@ -21,12 +22,21 @@ export class AuthService {
     );
   }
 
-  register(data: any) { // Se puede crear un DTO para el registro
-    return this.http.post(`${this.userUrl}/`, data);
+  register(data: any) {
+    return this.http.post(`${this.authUrl}/register`, data);
   }
 
-  logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+  logout(): Observable<any> {
+    // Llama al endpoint de logout del backend y luego limpia el storage local
+    return this.http.post(`${this.authUrl}/logout`, {}).pipe(
+      tap(() => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+      })
+    );
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('access_token');
   }
 }

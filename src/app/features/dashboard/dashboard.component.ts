@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { DashboardService, DashboardStats } from '../../core/services/dashboard.service';
+import { DashboardService } from '../../core/services/dashboard.service';
+
+interface DashboardStats {
+  totalTasks: number;
+  completed: number;
+  inProgress: number;
+  toDo: number;
+  overdue: number;
+  highPriority: number;
+  mediumPriority: number;
+  lowPriority: number;
+  completionPercentage: number;
+}
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    MatCardModule, 
-    MatProgressBarModule, 
-    MatButtonModule, 
-    MatIconModule,
-    MatProgressSpinnerModule
-  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -35,7 +32,8 @@ export class DashboardComponent implements OnInit {
         this.stats = data;
         this.loading = false;
       },
-      error: (err: Error) => {
+      error: (err) => {
+        console.error('Error cargando dashboard:', err);
         this.error = 'No se pudieron cargar las estadísticas';
         this.loading = false;
       }
