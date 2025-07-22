@@ -87,4 +87,9 @@ export class TaskService {
   }): Observable<Task[]> {
     return this.http.post<Task[]>(`${this.baseUrl}/filter`, filters);
   }
+
+  /** Obtener estadísticas del dashboard */
+  getDashboard(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/dashboard/');
+  }
 }

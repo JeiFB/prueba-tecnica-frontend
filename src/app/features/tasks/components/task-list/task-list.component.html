@@ -1,7 +1,8 @@
 <div class="task-list">
-    <button mat-raised-button color="primary" routerLink="new">
-      Nueva tarea
-    </button>
+  <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+    <button mat-raised-button color="primary" routerLink="new">Nueva tarea</button>
+    <button mat-raised-button color="primary" routerLink="/dashboard">Ver Dashboard</button>
+  </div>
 
   <!-- Formulario de filtros -->
   <form [formGroup]="filterForm" (ngSubmit)="filterTasks()" class="filter-form" style="margin: 16px 0; display: flex; gap: 16px; flex-wrap: wrap; align-items: end;">

@@ -6,11 +6,13 @@ import { RouterModule, Routes } from '@angular/router';
 // Importa tus dos componentes
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
+// Eliminar la importación de TaskDashboardComponent
 
 // Importa tu guard funcional
 import { authGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
+  // { path: 'dashboard', component: TaskDashboardComponent }, // Eliminado
   {
     path: '',
     canActivate: [ authGuard ],

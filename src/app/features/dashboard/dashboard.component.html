@@ -1,0 +1,67 @@
+<div class="dashboard-back-btn">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="goToTasks()"
+    style="font-weight: bold; font-size: 1.1em;"
+  >
+    Volver a tareas
+  </button>
+</div>
+<div *ngIf="loading" class="dashboard-loading">Cargando estadísticas...</div>
+<div *ngIf="error" class="dashboard-error">{{ error }}</div>
+<div *ngIf="stats" class="dashboard-container">
+  <div class="dashboard-cards">
+    <mat-card class="dashboard-card total">
+      <mat-icon class="dashboard-icon total">assignment</mat-icon>
+      <div class="dashboard-label">Total de tareas</div>
+      <div class="dashboard-value">{{ stats.totalTasks }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card completed">
+      <mat-icon class="dashboard-icon completed">check_circle</mat-icon>
+      <div class="dashboard-label">Completadas</div>
+      <div class="dashboard-value">{{ stats.completed }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card in-progress">
+      <mat-icon class="dashboard-icon in-progress">autorenew</mat-icon>
+      <div class="dashboard-label">En progreso</div>
+      <div class="dashboard-value">{{ stats.inProgress }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card todo">
+      <mat-icon class="dashboard-icon todo">pending_actions</mat-icon>
+      <div class="dashboard-label">Por hacer</div>
+      <div class="dashboard-value">{{ stats.toDo }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card overdue">
+      <mat-icon class="dashboard-icon overdue">error</mat-icon>
+      <div class="dashboard-label">Vencidas</div>
+      <div class="dashboard-value">{{ stats.overdue }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card high">
+      <mat-icon class="dashboard-icon high">priority_high</mat-icon>
+      <div class="dashboard-label">Alta prioridad</div>
+      <div class="dashboard-value">{{ stats.highPriority }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card medium">
+      <mat-icon class="dashboard-icon medium">flag</mat-icon>
+      <div class="dashboard-label">Media prioridad</div>
+      <div class="dashboard-value">{{ stats.mediumPriority }}</div>
+    </mat-card>
+    <mat-card class="dashboard-card low">
+      <mat-icon class="dashboard-icon low">low_priority</mat-icon>
+      <div class="dashboard-label">Baja prioridad</div>
+      <div class="dashboard-value">{{ stats.lowPriority }}</div>
+    </mat-card>
+  </div>
+  <div class="dashboard-progress">
+    <mat-card>
+      <mat-card-title>Porcentaje de avance</mat-card-title>
+      <mat-card-content>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+          <mat-progress-bar mode="determinate" [value]="stats.completionPercentage" color="accent" style="height: 24px; border-radius: 8px;"></mat-progress-bar>
+          <span class="dashboard-progress-label">{{ stats.completionPercentage }}%</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

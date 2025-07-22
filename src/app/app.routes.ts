@@ -17,6 +17,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/tasks/tasks.module').then(m => m.TasksModule)
   },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
+  },
   // ruta por defecto
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   // atrapar todo lo demás
